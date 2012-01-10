@@ -54,24 +54,27 @@ exports['test_disconnect_detect'] = function(test, assert) {
   server.listen(9162);
   var connection = thrift.createConnection('localhost', 9162); 
   var conncheck = false;
-  connection.once('close', function() {
+
+  connection.on('end', function() {
     conncheck = true;
+    connection.end();
     test.finish();
   });
+  
   var client = thrift.createClient(ThriftTest, connection);
   client.testVoid(function(err, response) {
     assert.ifError(err);
-    connection.end();
     server.close();
   });
 }
 
 exports['test_reconnect'] = function(test, assert) {
+  test.skip();
   server.listen(9162);
-  var connection = thrift.createConnection('localhost', 9162); 
+  var connection = thrift.createConnection('localhost', 9162, {autorestart: true}); 
   var conncheck = false;
   connection.once('close', function() {
-    conncheck = true;  
+    conncheck = true;
   });
   async.series([
     function(callback) {
@@ -98,5 +101,3 @@ exports['test_reconnect'] = function(test, assert) {
     test.finish();
   });
 }
-
-*/
