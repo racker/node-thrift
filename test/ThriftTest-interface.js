@@ -375,3 +375,18 @@ exports['test_oneway'] = function (test, assert) {
   
   client.testOneway(10);
 }
+
+exports['test_boguz'] = function(test, assert) {
+  test.skip();
+  var connection = thrift.createConnection('localhost', 9162),
+  client = thrift.createClient(ThriftTest, connection);
+
+  var output = new client.pClass(client.output);
+  output.writeMessageBegin('store', thrift.Thrift.MessageType.CALL, 0);
+  output.writeStructBegin('ThriftTest_testVoid_args');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  output.writeMessageEnd();
+  output.flush();
+
+}
