@@ -83,7 +83,7 @@ exports['test_reconnect'] = function(test, assert) {
       client.testString('cat', function(err, response) {
         assert.deepEqual(response,'cat');
         assert.ifError(err);
-        connection.connection.destroy();
+        connection.connection.end();
         callback();
       });
     },
