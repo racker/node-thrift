@@ -23,6 +23,7 @@ env["GENDIR"] = pjoin(cwd, 'test', 'generated')
 
 THRIFT_TARGETS = {
   'ThriftTest.thrift': [ 'js:node' ],
+  'tel.thrift': [ 'js:node' ],
   'mid.thrift': [ 'js:node' ]
 }
 
